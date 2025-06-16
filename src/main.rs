@@ -1,7 +1,7 @@
 use std::io::stdin;
 
 /// This function check the result of the operation and print it
-fn print_result(result : f64) -> (){
+fn print_result(result: f64) -> () {
     match result {
         f64::INFINITY => println!("Result: Infinity"),
         f64::NEG_INFINITY => println!("Result: Negative Infinity"),
@@ -31,9 +31,9 @@ fn get_action_from_user() -> String {
 /// This function perform the desired calculation
 fn do_math(first_num: f64, second_num: f64, action: &str) -> f64 {
     match action {
-        "-" => first_num - second_num,
-        "+" => first_num + second_num,
-        "*" => first_num * second_num,
+        "-" => return first_num - second_num,
+        "+" => return first_num + second_num,
+        "*" => return first_num * second_num,
         "/" => {
             if second_num == 0.0 {
                 // This is not necessary as validate_result function will handle it,
@@ -41,12 +41,12 @@ fn do_math(first_num: f64, second_num: f64, action: &str) -> f64 {
                 println!("can't divide by 0 :(((((((");
                 return f64::NAN;
             } else {
-                return first_num / second_num
+                return first_num / second_num;
             }
-        },
+        }
         _ => {
             println!("What kind of dark magic are you dealing with -_-");
-            return 0.0
+            return 0.0;
         }
     }
 }
@@ -62,9 +62,8 @@ fn main() {
 
     println!("Enter operation (+, -, *, /):");
     let operation = get_action_from_user();
-    
+
     let result = do_math(first_number, second_number, &operation);
     print_result(result);
     println!("Thank you for using the ~cyber~ calculator!");
-
 }
