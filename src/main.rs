@@ -14,7 +14,10 @@ fn get_number_from_user() -> u32 {
     stdin()
         .read_line(&mut user_input)
         .expect("Failed to read line");
-    user_input.trim().parse().expect("Please input a valid number")
+    user_input
+        .trim()
+        .parse()
+        .expect("Please input a valid number")
 }
 
 /// Validates if the user's guess is within the valid range.
@@ -47,7 +50,7 @@ fn main() {
     let secret_number: u32 = rand::thread_rng().gen_range(MIN_VALUE..=MAX_VALUE);
 
     println!("Guess a number! ({MIN_VALUE}-{MAX_VALUE})");
-    
+
     loop {
         let user_guess = get_number_from_user();
 
