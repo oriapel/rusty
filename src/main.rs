@@ -1,9 +1,9 @@
-use std::io;
+use std::io::stdin;
 
 fn main() {
     let mut name = String::new();
     println!("Please inout your name.");
-    io::stdin()
+    stdin()
         .read_line(&mut name)
         .expect("Failed to read name from stdin");
 
