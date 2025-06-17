@@ -1,4 +1,4 @@
-use crate::library_tools::book::{BOOK_NOT_TAKEN, BOOK_TAKEN, Book};
+use crate::library_tools::book::Book;
 use crate::library_tools::library::{Library, LibraryErrors};
 use std::io::stdin;
 
