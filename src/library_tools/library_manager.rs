@@ -2,6 +2,7 @@ use crate::library_tools::book::{BOOK_NOT_TAKEN, BOOK_TAKEN, Book};
 use crate::library_tools::library::{Library, LibraryErrors};
 use std::io::stdin;
 
+/// Enum representing the options available in the library manager menu
 pub enum LibraryOptions {
     AddNewBook,
     BorrowBook,
@@ -12,6 +13,7 @@ pub enum LibraryOptions {
     InvalidChoice,
 }
 
+/// Converts a u32 number to a LibraryOptions enum variant
 fn convert_u32_to_library_option(num: u32) -> LibraryOptions {
     match num {
         1 => LibraryOptions::AddNewBook,
@@ -24,37 +26,22 @@ fn convert_u32_to_library_option(num: u32) -> LibraryOptions {
     }
 }
 
-fn get_string_from_user() -> String {
-    let mut input = String::new();
-    stdin().read_line(&mut input).expect("Failed to read line");
-
-    input.trim().to_string()
-}
-
-fn get_u32_from_user() -> u32 {
-    loop {
-        let mut input = String::new();
-        match stdin().read_line(&mut input) {
-            Ok(_) => match input.trim().parse::<u32>() {
-                Ok(num) => return num,
-                Err(_) => println!("please enter a valid number"),
-            },
-            Err(_) => println!("please enter a valid number"),
-        }
-    }
-}
-
+/// LibraryManager struct that manages the library operations
+/// It contains a Library instance and methods to interact with it
 pub struct LibraryManager {
     pub library: Library,
 }
 
 impl LibraryManager {
+    /// Constructor for the LibraryManager struct
+    /// Initializes a new LibraryManager with an empty Library
     pub fn new() -> Self {
         Self {
             library: Library::new(),
         }
     }
 
+    /// This funciton adds a new book to the library, with data provided by the user
     fn add_book_to_library(&mut self) {
         println!("Enter book name:");
         let book_name = get_string_from_user();
@@ -64,6 +51,7 @@ impl LibraryManager {
         self.library.add_new_book(Book::new(book_name, author_name));
     }
 
+    /// This function borrows a book from the library
     fn borrow_book_from_library(&mut self) {
         println!("Enter book index to borrow:");
         let book_index = get_u32_from_user();
@@ -75,6 +63,7 @@ impl LibraryManager {
         }
     }
 
+    /// This function returns a book to the library
     fn return_book_to_library(&mut self) {
         println!("Enter book index to return:");
         let book_index = get_u32_from_user();
@@ -86,10 +75,12 @@ impl LibraryManager {
         }
     }
 
+    /// This function lists all books in the library
     fn list_all_books_in_library(&self) {
         self.library.list_all_books()
     }
 
+    /// This function prints a specific book from the library (by index)
     fn print_specific_book_from_library(&self) {
         println!("Enter book index to print:");
         let book_index = get_u32_from_user();
@@ -101,6 +92,7 @@ impl LibraryManager {
         }
     }
 
+    /// This function prints the menu options for the library manager
     pub fn print_menu(&self) {
         println!("Library Manager Menu:");
         println!("1. Add a new book");
@@ -111,6 +103,8 @@ impl LibraryManager {
         println!("6. Exit");
     }
 
+    /// This function manages the library operations in a loop,
+    /// allowing the user to choose options from the menu until they decide to exit
     pub fn manage_library(&mut self) {
         loop {
             self.print_menu();
