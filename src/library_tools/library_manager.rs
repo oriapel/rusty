@@ -1,9 +1,9 @@
-use crate::library_tools::book::Book;
 use crate::library_tools::library::{Library, LibraryErrors};
+use crate::library_tools::library_book::LibraryBook;
 use std::io::stdin;
 
 /// Enum representing the options available in the library manager menu
-pub enum LibraryOptions {
+enum LibraryOptions {
     AddNewBook,
     BorrowBook,
     ReturnBook,
@@ -41,57 +41,6 @@ impl LibraryManager {
         }
     }
 
-    /// This funciton adds a new book to the library, with data provided by the user
-    fn add_book_to_library(&mut self) {
-        println!("Enter book name:");
-        let book_name = get_string_from_user();
-        println!("Enter author name:");
-        let author_name = get_string_from_user();
-
-        self.library.add_new_book(Book::new(book_name, author_name));
-    }
-
-    /// This function borrows a book from the library
-    fn borrow_book_from_library(&mut self) {
-        println!("Enter book index to borrow:");
-        let book_index = get_u32_from_user();
-        let action_status = self.library.borrow_book(book_index);
-        match action_status {
-            Ok(_) => println!("Succesfully borrowed book!"),
-            Err(LibraryErrors::BookNotFound) => println!("No such book!"),
-            Err(LibraryErrors::InvalidBookStatus) => println!("Book is already borrowed!"),
-        }
-    }
-
-    /// This function returns a book to the library
-    fn return_book_to_library(&mut self) {
-        println!("Enter book index to return:");
-        let book_index = get_u32_from_user();
-        let action_status = self.library.return_book(book_index);
-        match action_status {
-            Ok(_) => println!("Succesfully returned book!"),
-            Err(LibraryErrors::BookNotFound) => println!("No such book!"),
-            Err(LibraryErrors::InvalidBookStatus) => println!("Book was not borrowed!"),
-        }
-    }
-
-    /// This function lists all books in the library
-    fn list_all_books_in_library(&self) {
-        self.library.list_all_books()
-    }
-
-    /// This function prints a specific book from the library (by index)
-    fn print_specific_book_from_library(&self) {
-        println!("Enter book index to print:");
-        let book_index = get_u32_from_user();
-        if let Some(book) = self.library.get_book_by_index(book_index) {
-            print!("{}. ", book_index);
-            book.print_book();
-        } else {
-            println!("No book found at index {}", book_index);
-        }
-    }
-
     /// This function prints the menu options for the library manager
     pub fn print_menu(&self) {
         println!("Library Manager Menu:");
@@ -123,6 +72,58 @@ impl LibraryManager {
             }
         }
         println!("~Goodbye~");
+    }
+
+    /// This funciton adds a new book to the library, with data provided by the user
+    fn add_book_to_library(&mut self) {
+        println!("Enter book name:");
+        let book_name = get_string_from_user();
+        println!("Enter author name:");
+        let author_name = get_string_from_user();
+
+        self.library
+            .add_new_book(LibraryBook::new(book_name, author_name));
+    }
+
+    /// This function borrows a book from the library
+    fn borrow_book_from_library(&mut self) {
+        println!("Enter book name to borrow:");
+        let book_name = get_string_from_user();
+        let action_status = self.library.borrow_book(&book_name);
+        match action_status {
+            Ok(_) => println!("Succesfully borrowed book!"),
+            Err(LibraryErrors::BookNotFound) => println!("No such book!"),
+            Err(LibraryErrors::InvalidBookStatus) => println!("Book is already borrowed!"),
+        }
+    }
+
+    /// This function returns a book to the library
+    fn return_book_to_library(&mut self) {
+        println!("Enter book name to return:");
+        let book_name = get_string_from_user();
+        let action_status = self.library.return_book(&book_name);
+        match action_status {
+            Ok(_) => println!("Succesfully returned book!"),
+            Err(LibraryErrors::BookNotFound) => println!("No such book!"),
+            Err(LibraryErrors::InvalidBookStatus) => println!("Book was not borrowed!"),
+        }
+    }
+
+    /// This function lists all books in the library
+    fn list_all_books_in_library(&self) {
+        self.library.list_all_books()
+    }
+
+    /// This function prints a specific book from the library (by index)
+    fn print_specific_book_from_library(&self) {
+        println!("Enter book index to print:");
+        let book_index = get_u32_from_user();
+        if let Some(book) = self.library.get_book_by_index(book_index) {
+            print!("{}. ", book_index);
+            println!("{book}");
+        } else {
+            println!("No book found at index {}", book_index);
+        }
     }
 }
 
