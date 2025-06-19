@@ -114,7 +114,7 @@ impl LibraryManager {
 
     /// This function lists all books in the library
     fn list_all_books_in_library(&self) {
-        self.library.list_all_books()
+        println!("{}", self.library);
     }
 
     /// This function prints a specific book from the library (by index)

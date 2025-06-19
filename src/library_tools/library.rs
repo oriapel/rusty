@@ -1,3 +1,5 @@
+use std::fmt::Display;
+
 use crate::library_tools::library_book::{BookStatus, LibraryBook};
 
 /// defined errors for the library module
@@ -12,20 +14,26 @@ pub struct Library {
     pub library_books: Vec<LibraryBook>,
 }
 
+impl Display for Library {
+    fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+        let mut all_books_data = String::new();
+        for (index, book) in self.library_books.iter().enumerate() {
+            all_books_data.push_str(&format!("{}. {}\n", index, book));
+        }
+        write!(
+            f,
+            "Library contains the following books:\n{}",
+            all_books_data
+        )
+    }
+}
+
 impl Library {
     // Constructor for the library struct
     // Initializes an empty library
     pub fn new() -> Self {
         Self {
             library_books: Vec::new(),
-        }
-    }
-
-    /// This function print all books' data
-    pub fn list_all_books(&self) {
-        for (index, book) in self.library_books.iter().enumerate() {
-            print!("{}. ", index);
-            println!("{book}");
         }
     }
 
