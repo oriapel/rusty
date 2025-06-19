@@ -57,7 +57,9 @@ impl Library {
     }
 
     fn get_mut_book_by_name(&mut self, name: &String) -> Option<&mut LibraryBook> {
-        self.library_books.iter_mut().find(|book| &book.book.title == name)
+        self.library_books
+            .iter_mut()
+            .find(|book| &book.book.title == name)
     }
 
     /// This function changes the book's availability status,

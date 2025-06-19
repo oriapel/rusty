@@ -4,12 +4,12 @@ use std::io::stdin;
 
 /// Enum representing the options available in the library manager menu
 enum LibraryOptions {
-    AddNewBook,
-    BorrowBook,
-    ReturnBook,
-    ListAllBooks,
-    PrintBook,
-    Exit,
+    AddNewBook = 1,
+    BorrowBook = 2,
+    ReturnBook = 3,
+    ListAllBooks = 4,
+    PrintBook = 5,
+    Exit = 6,
     InvalidChoice,
 }
 
@@ -44,12 +44,15 @@ impl LibraryManager {
     /// This function prints the menu options for the library manager
     pub fn print_menu(&self) {
         println!("Library Manager Menu:");
-        println!("1. Add a new book");
-        println!("2. Borrow a book");
-        println!("3. Return a book");
-        println!("4. List all books");
-        println!("5. Print a specific book");
-        println!("6. Exit");
+        println!("{}. Add a new book", LibraryOptions::AddNewBook as u32);
+        println!("{}. Borrow a book", LibraryOptions::BorrowBook as u32);
+        println!("{}. Return a book", LibraryOptions::ReturnBook as u32);
+        println!("{}. List all books", LibraryOptions::ListAllBooks as u32);
+        println!(
+            "{}. Print a specific book",
+            LibraryOptions::PrintBook as u32
+        );
+        println!("{}. Exit", LibraryOptions::Exit as u32);
     }
 
     /// This function manages the library operations in a loop,
