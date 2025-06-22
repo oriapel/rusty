@@ -1,6 +1,5 @@
 use rand::Rng;
-use std::cmp::Ordering;
-use std::io::stdin;
+use std::{cmp::Ordering, io::stdin};
 
 /// The max value of the secret number.
 const MAX_VALUE: u32 = 100;
