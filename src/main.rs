@@ -1,5 +1,6 @@
 use rand::Rng;
-use std::{cmp::Ordering, io::stdin};
+
+use std::{io::stdin, cmp::Ordering};
 
 /// The max value of the secret number.
 const MAX_VALUE: u32 = 100;
@@ -8,15 +9,14 @@ const MAX_VALUE: u32 = 100;
 const MIN_VALUE: u32 = 1;
 
 /// This function gets a number from the user.
-fn get_number_from_user() -> u32 {
-    let mut user_input = String::new();
-    stdin()
-        .read_line(&mut user_input)
-        .expect("Failed to read line");
-    user_input
-        .trim()
-        .parse()
-        .expect("Please input a valid number")
+fn get_number_from_user() -> Result<u32, String> {
+    let mut input = String::new();
+    stdin().read_line(&mut input)
+        .map_err(|e| format!("Failed to read input: {}", e))?;
+
+    let trimmed = input.trim();
+    trimmed.parse::<u32>()
+        .map_err(|_| format!("Invalid number: '{}'", trimmed))
 }
 
 /// Validates if the user's guess is within the valid range.
@@ -52,6 +52,13 @@ fn main() {
 
     loop {
         let user_guess = get_number_from_user();
+        let user_guess = match user_guess {
+            Ok(guess) => guess,
+            Err(e) => {
+                println!("{e}");
+                continue;
+            }
+        };
 
         if !is_guess_valid(user_guess) {
             println!("Please input a valid number between {MIN_VALUE} and {MAX_VALUE}.");
