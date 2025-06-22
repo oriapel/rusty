@@ -8,8 +8,8 @@ pub enum LibraryErrors {
     InvalidBookStatus,
 }
 
-/// The [Library] struct represents a collection of [LibraryBook]s.
-/// It contains a vector of [LibraryBooks] and provides methods to manage them
+/// The [`Library`] struct represents a collection of [`LibraryBook`]s.
+/// It contains a vector of [`LibraryBook`] and provides methods to manage them
 pub struct Library {
     pub library_books: Vec<LibraryBook>,
 }
@@ -29,46 +29,46 @@ impl Display for Library {
 }
 
 impl Library {
-    // Constructor for the [Library] struct
-    // Initializes an empty [Library]
+    // Constructor for the [`Library`] struct
+    // Initializes an empty [`Library`]
     pub fn new() -> Self {
         Self {
             library_books: Vec::new(),
         }
     }
 
-    /// This function adds a new [LibraryBook] to the library
+    /// This function adds a new [`LibraryBook`] to the library
     pub fn add_new_book(&mut self, book: LibraryBook) {
         // I could use the next line if I would to run this code on limited memory machine
         // books.try_reserve(1)?;
         self.library_books.push(book);
     }
 
-    /// This function borrows a book from the [Library], changes the [LibraryBook]'s [BookStatus] to [BookStatus::BookTaken]
+    /// This function borrows a book from the [`Library`], changes the [`LibraryBook`]'s [`BookStatus`] to [`BookStatus::BookTaken`]
     pub fn borrow_book(&mut self, name: &String) -> Result<(), LibraryErrors> {
         self.change_book_availability(name, BookStatus::BookTaken)
     }
 
-    /// This function returns a [LibraryBook] to the [Library], changes the [LibraryBook]'s [BookStatus] to [BookStatus::BookNotTaken]
+    /// This function returns a [`LibraryBook`] to the [`Library`], changes the [`LibraryBook`]'s [`BookStatus`] to [`BookStatus::BookNotTaken`]
     pub fn return_book(&mut self, name: &String) -> Result<(), LibraryErrors> {
         self.change_book_availability(name, BookStatus::BookNotTaken)
     }
 
-    /// This function returns a mutable [LibraryBook] by its name, if it exists
+    /// This function returns a mutable [`LibraryBook`] by its name, if it exists
     fn get_mut_book_by_name(&mut self, name: &String) -> Option<&mut LibraryBook> {
         self.library_books
             .iter_mut()
             .find(|book| &book.book.title == name)
     }
 
-    /// This function returns a [LibraryBook] by its name, if it exists
+    /// This function returns a [`LibraryBook`] by its name, if it exists
     pub fn get_book_by_name(&self, name: &String) -> Option<&LibraryBook> {
         self.library_books
             .iter()
             .find(|book| &book.book.title == name)
     }
 
-    /// This function changes the [LibraryBook]'s [BookStatus],
+    /// This function changes the [`LibraryBook`]'s [`BookStatus`],
     /// to be used when borrowing or returning a book.
     fn change_book_availability(
         &mut self,

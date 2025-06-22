@@ -8,17 +8,17 @@ pub enum BookStatus {
     BookNotTaken,
 }
 
-/// The [LibraryBook] struct represents a book in the library.
-/// It contains a [Book] and its status, which can be either [BookStatus::BookTaken] or [BookStatus::BookNotTaken].
+/// The [`LibraryBook`] struct represents a book in the library.
+/// It contains a [`Book`] and its status, which can be either [BookStatus::BookTaken] or [BookStatus::BookNotTaken].
 pub struct LibraryBook {
     pub book: Book,
     pub status: BookStatus,
 }
 
 impl LibraryBook {
-    /// Constructor for the [LibraryBook] struct
-    /// Initializes a new [LibraryBook] with the given title and author,
-    /// and sets its status to [BookStatus::BookNotTaken]
+    /// Constructor for the [`LibraryBook`] struct
+    /// Initializes a new [`LibraryBook`] with the given title and author,
+    /// and sets its status to [`BookStatus::BookNotTaken`]
     pub fn new(book_title: String, book_author: String) -> Self {
         Self {
             book: Book::new(book_title, book_author),
