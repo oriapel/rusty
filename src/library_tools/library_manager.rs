@@ -10,7 +10,6 @@ enum LibraryOptions {
     ListAllBooks = 4,
     PrintBook = 5,
     Exit = 6,
-    InvalidChoice,
 }
 
 impl TryFrom<u32> for LibraryOptions {
@@ -68,7 +67,10 @@ impl LibraryManager {
             let user_choice = get_u32_from_user();
             let user_choice = match LibraryOptions::try_from(user_choice) {
                 Ok(option) => option,
-                Err(_) => LibraryOptions::InvalidChoice,
+                Err(_) => {
+                    println!("Invalid choice, please try again");
+                    continue;
+                }
             };
 
             match user_choice {
@@ -78,7 +80,6 @@ impl LibraryManager {
                 LibraryOptions::ListAllBooks => self.list_all_books_in_library(),
                 LibraryOptions::PrintBook => self.print_specific_book_from_library(),
                 LibraryOptions::Exit => break,
-                LibraryOptions::InvalidChoice => println!("Invalid choice, please try again"),
             }
         }
         println!("~Goodbye~");
@@ -149,12 +150,11 @@ fn get_string_from_user() -> String {
 fn get_u32_from_user() -> u32 {
     loop {
         let mut input = String::new();
-        match stdin().read_line(&mut input) {
-            Ok(_) => match input.trim().parse::<u32>() {
-                Ok(num) => return num,
-                Err(_) => println!("please enter a valid number"),
-            },
-            Err(_) => println!("please enter a valid number"),
+        if stdin().read_line(&mut input).is_ok() {
+            if let Ok(num) = input.trim().parse::<u32>() {
+                return num;
+            }
         }
+        println!("Invalid input, please enter a valid number:");
     }
 }

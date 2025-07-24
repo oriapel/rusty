@@ -2,7 +2,7 @@
 use crate::library_tools::book::Book;
 use std::fmt;
 
-#[derive(PartialEq)]
+#[derive(PartialEq, Eq)]
 pub enum BookStatus {
     BookTaken,
     BookNotTaken,
@@ -32,7 +32,6 @@ impl fmt::Display for LibraryBook {
         let book_status = match self.status {
             BookStatus::BookTaken => "Borrowed",
             BookStatus::BookNotTaken => "Available",
-            _ => "Unknown",
         };
         write!(
             f,
